@@ -1,117 +1,325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahril Saepuloh | Backend Engineer</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+  :root{
+    --bg-base:#0b1120;
+    --bg-panel:#111a2e;
+    --bg-panel-alt:#0e1626;
+    --border:#22304a;
+    --border-soft:#1a2438;
+    --text-primary:#e7ebf3;
+    --text-muted:#8592a8;
+    --text-faint:#576078;
+    --teal:#2fd9b8;
+    --teal-dim:#1c8f79;
+    --amber:#f2a541;
+    --get:#3ba6ff;
+    --post:#2fd9b8;
+    --radius:10px;
+    --mono: 'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
 
-body{
-    font-family:Arial, Helvetica, sans-serif;
-    background:#f5f7fa;
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    font-family:var(--sans);
+    background:
+      radial-gradient(circle at 1.5px 1.5px, rgba(255,255,255,.05) 1px, transparent 0) 0 0/22px 22px,
+      radial-gradient(1200px 600px at 50% -10%, #16213a 0%, var(--bg-base) 60%);
+    background-color:var(--bg-base);
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
-}
+    padding:32px 16px;
+    color:var(--text-primary);
+  }
 
-.container{
-    width:90%;
-    max-width:500px;
-    background:#fff;
-    padding:40px;
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    text-align:center;
-}
+  .window{
+    width:100%;
+    max-width:460px;
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.02) inset;
+  }
 
-h1{
+  /* --- title bar --- */
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 16px;
+    background:var(--bg-panel-alt);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+  .dot.red{ background:#ff5f57; }
+  .dot.yellow{ background:#febc2e; }
+  .dot.green{ background:#28c840; }
+  .titlebar span.path{
+    margin-left:auto;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-faint);
+  }
+
+  /* --- body --- */
+  .content{ padding:28px 26px 24px; }
+
+  .prompt-line{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--teal);
+    margin-bottom:6px;
+  }
+  .prompt-line .sym{ color:var(--text-faint); }
+
+  h1{
+    font-family:var(--mono);
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    color:var(--text-primary);
+    margin:2px 0 4px;
+  }
+  h1 .caret{
+    display:inline-block;
+    width:9px; height:22px;
+    background:var(--teal);
+    margin-left:4px;
+    vertical-align:-3px;
+    animation:blink 1.1s step-end infinite;
+  }
+
+  .role{
+    font-size:14.5px;
+    color:var(--text-muted);
+    margin-bottom:16px;
+    line-height:1.5;
+  }
+
+  .status-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-muted);
+    margin-bottom:20px;
+  }
+  .pulse-dot{
+    position:relative;
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--teal);
+    flex-shrink:0;
+  }
+  .pulse-dot::after{
+    content:"";
+    position:absolute; inset:-4px;
+    border-radius:50%;
+    border:1px solid var(--teal);
+    animation:pulse 2s ease-out infinite;
+  }
+  .status-row b{ color:var(--teal); font-weight:600; }
+  .status-row .sep{ color:var(--border); }
+
+  .stack{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:24px;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.02em;
+    color:var(--text-muted);
+    border:1px solid var(--border);
+    background:var(--bg-panel-alt);
+    padding:5px 9px;
+    border-radius:5px;
+  }
+
+  .section-label{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--text-faint);
     margin-bottom:10px;
-}
+  }
 
-.subtitle{
-    color:#666;
-    margin-bottom:30px;
-}
+  .routes{
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--border-soft);
+    border-radius:8px;
+    overflow:hidden;
+  }
 
-a{
-    display:block;
-    margin:12px 0;
-    padding:14px;
-    border-radius:10px;
+  a.route{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
     text-decoration:none;
-    font-weight:bold;
-    transition:.2s;
-}
+    color:var(--text-primary);
+    background:var(--bg-panel-alt);
+    border-bottom:1px solid var(--border-soft);
+    transition:background .15s ease, padding-left .15s ease;
+  }
+  .routes a.route:last-child{ border-bottom:none; }
 
-.download{
-    background:#2563eb;
-    color:white;
-}
+  a.route:hover{
+    background:#152038;
+    padding-left:18px;
+  }
+  a.route:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:-2px;
+  }
 
-.github{
-    background:#24292e;
-    color:white;
-}
+  .method{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    padding:3px 7px;
+    border-radius:4px;
+    min-width:38px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  .method.get{ color:var(--get); background:rgba(59,166,255,.12); }
+  .method.post{ color:var(--post); background:rgba(47,217,184,.12); }
 
-.linkedin{
-    background:#0a66c2;
-    color:white;
-}
+  .route-main{ flex:1; min-width:0; }
+  .route-path{
+    font-family:var(--mono);
+    font-size:13.5px;
+    color:var(--text-primary);
+  }
+  .route-desc{
+    font-size:11.5px;
+    color:var(--text-faint);
+    margin-top:1px;
+  }
 
-.email{
-    background:#16a34a;
-    color:white;
-}
+  .route-arrow{
+    font-family:var(--mono);
+    color:var(--text-faint);
+    font-size:14px;
+    transition:transform .15s ease, color .15s ease;
+  }
+  a.route:hover .route-arrow{
+    color:var(--teal);
+    transform:translateX(2px);
+  }
 
-a:hover{
-    transform:translateY(-2px);
-    opacity:.95;
-}
+  a.route.primary .route-arrow,
+  a.route.primary:hover .route-arrow{ color:var(--amber); }
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--text-faint);
+    margin-top:22px;
+  }
+
+  @keyframes blink{ 50%{ opacity:0; } }
+  @keyframes pulse{
+    0%{ transform:scale(1); opacity:.6; }
+    100%{ transform:scale(2.4); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .pulse-dot::after{ animation:none; }
+    h1 .caret{ animation:none; }
+  }
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
+<div class="window">
+  <div class="titlebar">
+    <span class="dot red"></span>
+    <span class="dot yellow"></span>
+    <span class="dot green"></span>
+    <span class="path">sahril@backend — /profile</span>
+  </div>
 
-<h1>Sahril Saepuloh</h1>
+  <div class="content">
+    <div class="prompt-line"><span class="sym">$</span> whoami</div>
+    <h1>Sahril Saepuloh<span class="caret"></span></h1>
+    <p class="role">Backend Engineer — banking &amp; securities systems</p>
 
-<p class="subtitle">
-Backend Engineer
-</p>
+    <div class="status-row">
+      <span class="pulse-dot"></span>
+      <b>online</b>
+      <span class="sep">·</span>
+      <span>3 yrs exp</span>
+      <span class="sep">·</span>
+      <span>Bandung, ID</span>
+    </div>
 
-<a class="download"
-   href="CV_Sahril_Saepuloh_backend_developer.pdf"
-   download="Sahril-Saepuloh-CV.pdf">
-📄 Download CV
-</a>
+    <div class="stack">
+      <span class="tag">JAVA</span>
+      <span class="tag">SPRING BOOT</span>
+      <span class="tag">POSTGRESQL</span>
+      <span class="tag">REDIS</span>
+      <span class="tag">ACTIVEMQ</span>
+      <span class="tag">VERT.X</span>
+    </div>
 
-<a class="github"
-   href="https://github.com/SahrilRyu08"
-   target="_blank">
-💻 GitHub
-</a>
+    <div class="section-label">// available routes</div>
 
-<a class="linkedin"
-   href="https://www.linkedin.com/in/sahril-saepuloh-24a636198/"
-   target="_blank">
-💼 LinkedIn
-</a>
+    <div class="routes">
+      <a class="route primary" href="CV_Sahril_Saepuloh_backend_developer.pdf" download="Sahril-Saepuloh-CV.pdf">
+        <span class="method get">GET</span>
+        <span class="route-main">
+          <div class="route-path">/cv</div>
+          <div class="route-desc">Unduh resume (PDF)</div>
+        </span>
+        <span class="route-arrow">↓</span>
+      </a>
 
-<a class="email"
-   href="mailto:sahrilryu@gmail.com">
-📧 Email
-</a>
+      <a class="route" href="https://github.com/SahrilRyu08" target="_blank" rel="noopener">
+        <span class="method get">GET</span>
+        <span class="route-main">
+          <div class="route-path">/github</div>
+          <div class="route-desc">Repositori &amp; kode</div>
+        </span>
+        <span class="route-arrow">→</span>
+      </a>
 
+      <a class="route" href="https://www.linkedin.com/in/sahril-saepuloh-24a636198/" target="_blank" rel="noopener">
+        <span class="method get">GET</span>
+        <span class="route-main">
+          <div class="route-path">/linkedin</div>
+          <div class="route-desc">Riwayat karier</div>
+        </span>
+        <span class="route-arrow">→</span>
+      </a>
+
+      <a class="route" href="mailto:sahrilryu@gmail.com">
+        <span class="method post">POST</span>
+        <span class="route-main">
+          <div class="route-path">/email</div>
+          <div class="route-desc">Kirim pesan</div>
+        </span>
+        <span class="route-arrow">→</span>
+      </a>
+    </div>
+  </div>
 </div>
+
+<footer>200 OK · last deploy: 2026</footer>
 
 </body>
 </html>
