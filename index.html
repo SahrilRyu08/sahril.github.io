@@ -2,48 +2,116 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sahril Saepuloh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahril Saepuloh | Backend Engineer</title>
 
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body{
-    font-family:Arial;
-    max-width:700px;
-    margin:60px auto;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f7fa;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:500px;
+    background:#fff;
+    padding:40px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
     text-align:center;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#666;
+    margin-bottom:30px;
 }
 
 a{
     display:block;
-    margin:15px;
-    font-size:20px;
+    margin:12px 0;
+    padding:14px;
+    border-radius:10px;
     text-decoration:none;
+    font-weight:bold;
+    transition:.2s;
 }
 
+.download{
+    background:#2563eb;
+    color:white;
+}
+
+.github{
+    background:#24292e;
+    color:white;
+}
+
+.linkedin{
+    background:#0a66c2;
+    color:white;
+}
+
+.email{
+    background:#16a34a;
+    color:white;
+}
+
+a:hover{
+    transform:translateY(-2px);
+    opacity:.95;
+}
 </style>
 
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>Sahril Saepuloh</h1>
 
-<p>Backend Engineer</p>
+<p class="subtitle">
+Backend Engineer
+</p>
 
-<a href="https://github.com/SahrilRyu08/sahril.github.io/blob/main/CV_Sahril_Saepuloh_backend_developer.pdf">📄 Download CV</a>
-
-<a href="https://github.com/SahrilRyu08">
-GitHub
+<a class="download"
+   href="CV_Sahril_Saepuloh_backend_developer.pdf"
+   download="Sahril-Saepuloh-CV.pdf">
+📄 Download CV
 </a>
 
-<a href="https://www.linkedin.com/in/sahril-saepuloh-24a636198/">
-LinkedIn
+<a class="github"
+   href="https://github.com/SahrilRyu08"
+   target="_blank">
+💻 GitHub
 </a>
 
-<a href="mailto:sahrilryu@gmail.com">
-Email
+<a class="linkedin"
+   href="https://www.linkedin.com/in/sahril-saepuloh-24a636198/"
+   target="_blank">
+💼 LinkedIn
 </a>
+
+<a class="email"
+   href="mailto:sahrilryu@gmail.com">
+📧 Email
+</a>
+
+</div>
 
 </body>
-
 </html>
